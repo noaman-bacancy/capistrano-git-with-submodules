@@ -38,8 +38,8 @@ class Capistrano::SCM::Git::WithSubmodules < Capistrano::Plugin
                   execute :git, :submodule, 'sync', '--recursive'
                   update_submodule.call
                 end
-                execute :find, release_path, "-name '.git'", "|",  "xargs -I {} rm -rf#{verbose} '{}'"
-                execute :rm, "-f#{verbose}", temp_index_file_path.to_s
+                #execute :find, release_path, "-name '.git'", "|",  "xargs -I {} rm -rf#{verbose} '{}'"
+                #execute :rm, "-f#{verbose}", temp_index_file_path.to_s
               end if test :test, '-f', release_path.join('.gitmodules')
             end
           end

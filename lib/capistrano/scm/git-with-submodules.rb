@@ -25,17 +25,17 @@ class Capistrano::SCM::Git::WithSubmodules < Capistrano::Plugin
             ) do
               within release_path do
                 verbose = Rake.application.options.trace ? 'v' : ''
-                quiet = Rake.application.options.trace ? '' : '--quiet'
+                quiet = Rake.application.options.trace ? '' : ''
 
-                execute :git, :reset, '--mixed', quiet, fetch(:branch), '--'
+                execute :git, :reset, '--mixed', quiet, fetch(:branch), ''
                 update_submodule = proc do
                   execute :git, :submodule, 'update',
-                          '--init', '--checkout', '--recursive', quiet
+                          '--init', '--checkout', '--recursive'
                 end
                 begin
                   update_submodule.call
                 rescue SSHKit::Command::Failed
-                  execute :git, :submodule, 'sync', '--recursive', quiet
+                  execute :git, :submodule, 'sync', '--recursive'
                   update_submodule.call
                 end
                 execute :find, release_path, "-name '.git'", "|",  "xargs -I {} rm -rf#{verbose} '{}'"
